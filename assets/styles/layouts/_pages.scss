@@ -1,5 +1,5 @@
-#candidatos {
-    padding: 30px 0px;
+#candidatos, #perfil {
+    padding: 50px 0px;
     background: -moz-linear-gradient(top, rgba(236, 239, 243, 1) 0%, rgba(255, 255, 255, 1) 100%);
     background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(236, 239, 243, 1)), color-stop(100%, rgba(255, 255, 255, 1)));
     background: -webkit-linear-gradient(top, rgba(236, 239, 243, 1) 0%, rgba(255, 255, 255, 1) 100%);
@@ -8,11 +8,34 @@
     background: linear-gradient(to bottom, rgba(236, 239, 243, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
+#perfil {
+	padding: 50px 100px;
+}
+#perfil p{
+	margin-bottom: 2px;
+    color: #1c1c1c;
+}
+
+#perfil a {
+    color: #1c1c1c;
+    transition: all 1s;
+    margin: 0 5px;
+}
+
+#perfil a:hover{
+    text-decoration: none;
+    color: #bebae2;
+}
 #candidatos img {
     width: 80%;
     transition: all 1s;
     text-align: center;
     margin: 20px 0px;
+}
+
+#perfil img{
+	width: 100%;
+	text-align: center;
 }
 
 #candidatos img:hover {
@@ -27,12 +50,14 @@
     margin-bottom: 20px;
     font-weight: $bold;
     text-transform: uppercase;
+    color: #1c1c1c;
 }
 
 #candidatos h2 {
     font-weight: $medium;
     margin-bottom: 0px;
     text-transform: uppercase;
+    color: #1c1c1c;
 }
 
 
