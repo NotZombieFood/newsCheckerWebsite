@@ -63,6 +63,21 @@ b{
     color: #1c1c1c;
 }
 
+button{
+    margin: 20px 5px;
+    background-color:  #1c1c1c;
+    color: white;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 1s;
+}
+
+button:hover{
+    background-color: #545454;
+}
 
 @media screen and (max-width: 760px) {
 	#candidatos img{

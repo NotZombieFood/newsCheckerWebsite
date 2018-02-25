@@ -110,6 +110,33 @@
         'candidato': {
             init: function() {
                 // JavaScript to be fired on the calculadora
+                function tabla(titulo, imagen, resumen, url) {
+                    html = '<div class="row"><div class="col-md-2"><img src="' + imagen + '"></div><div class="col-md-10"><a href="' + url + '">' + titulo + '</a><p>' + resumen + '</p>';
+                    $('#informacion > .row:last-child').append(html);
+                }
+
+                $(".categorias").click(function() {
+                    var categoria = $(this).attr('id');
+                    var candidato = $('body').data('candidato');
+                    var url = 'https://fakenews-mx.herokuapp.com/ARTICLE';
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        crossDomain: true,
+                        dataType: 'json',
+                        data: { "categoria": categoria, "candidato": candidato },
+                        success: function(data) {
+                            //la acción a realizar en caso de que la request se complete
+                            var leng_json = data.length;
+                            for (var i = 0; i < leng_json; i++) {
+                                tabla(data[i].titulo, data[i].img, data[i].resumen, data[i].url);
+                            }
+                        },
+                        failure: function(data) {
+                            console.log(data);
+                        }
+                    });
+                });
 
             },
             finalize: function() {
