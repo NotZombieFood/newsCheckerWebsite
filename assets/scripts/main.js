@@ -111,14 +111,17 @@
             init: function() {
                 // JavaScript to be fired on the calculadora
                 function tabla(titulo, imagen, resumen, url) {
-                    html = '<div class="row"><div class="col-md-2"><img src="' + imagen + '"></div><div class="col-md-10"><a href="' + url + '">' + titulo + '</a><p>' + resumen + '</p>';
-                    $('#informacion > .row:last-child').append(html);
+                    var html = '<div class="row m-tp noticias"><div class="col-md-2"><img src="' + imagen + '"></div><div class="col-md-10"><a class="smallURL" href="' + url + '">' + titulo + '</a><p class="smallText">' + resumen + '</p>';
+                    $('.row').last().after(html);
+                    $('html, body').animate({
+                        scrollTop: $('.row').last().offset().top
+                    }, 2000);
                 }
 
-                $(".categorias").click(function() {
+                $("button").click(function() {
                     var categoria = $(this).attr('id');
                     var candidato = $('body').data('candidato');
-                    var url = 'https://fakenews-mx.herokuapp.com/ARTICLE';
+                    var url = 'https://fakenews-mx.herokuapp.com/FEED';
                     $.ajax({
                         type: "GET",
                         url: url,
@@ -126,7 +129,7 @@
                         dataType: 'json',
                         data: { "categoria": categoria, "candidato": candidato },
                         success: function(data) {
-                            //la acción a realizar en caso de que la request se complete
+                            $('.noticias').remove();
                             var leng_json = data.length;
                             for (var i = 0; i < leng_json; i++) {
                                 tabla(data[i].titulo, data[i].img, data[i].resumen, data[i].url);
@@ -142,7 +145,45 @@
             finalize: function() {
                 // JavaScript to be fired on the home page, after the init JS
             }
+        },
+        'verificador': {
+            init: function() {
+                // JavaScript to be fired on the calculadora
+                $("#checkurl").submit(function() {
+                    var url = 'https://fakenews-mx.herokuapp.com/ARTICLE';
+                    var url2 = $("#url").val();
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        crossDomain: true,
+                        dataType: 'json',
+                        data: { "url": url2},
+                        success: function(data) {
+                            console.log(data);
+                            var html = "";
+                            if(data=="El sitio es confiable"){
+                                html = "<h2>Es sitio es confiable</h2>"
+                            } else if (data=="No es confiable el sitio"){
+                                html = "<h2>El sitio no es confiable</h2>"
+                            } else{
+                                html = "<h2>No tenemos información suficiente</h2>"
+                            }
+
+                            $("#results").html(html);
+                        },
+                        failure: function(data) {
+                            console.log(data);
+                        }
+                    });
+                    return false;
+                });
+
+            },
+            finalize: function() {
+                // JavaScript to be fired on the home page, after the init JS
+            }
         }
+
     };
 
     // The routing fires all common scripts, followed by the page specific scripts.
