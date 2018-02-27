@@ -41,7 +41,14 @@
         'common': {
             init: function() {
                 // JavaScript to be fired on all pages
-
+                $('body').on('click', '.js-nav-toggle', function(event) {
+                    event.preventDefault();
+                    if ($('#navbar').is(':visible')) {
+                        $(this).removeClass('active');
+                    } else {
+                        $(this).addClass('active');
+                    }
+                });
 
             },
             finalize: function() {
@@ -122,13 +129,15 @@
                     var categoria = $(this).attr('id');
                     var candidato = $('body').data('candidato');
                     var url = 'https://fakenews-mx.herokuapp.com/FEED';
+                    var devurl = 'https://fakenews-developer.herokuapp.com/FEED';
                     $.ajax({
                         type: "GET",
-                        url: url,
+                        url: devurl,
                         crossDomain: true,
                         dataType: 'json',
                         data: { "categoria": categoria, "candidato": candidato },
                         success: function(data) {
+                            console.log(data);
                             $('.noticias').remove();
                             var leng_json = data.length;
                             for (var i = 0; i < leng_json; i++) {
@@ -151,21 +160,22 @@
                 // JavaScript to be fired on the calculadora
                 $("#checkurl").submit(function() {
                     var url = 'https://fakenews-mx.herokuapp.com/ARTICLE';
+                    var devurl = 'https://fakenews-developer.herokuapp.com/ARTICLE';
                     var url2 = $("#url").val();
                     $.ajax({
                         type: "GET",
-                        url: url,
+                        url: devurl,
                         crossDomain: true,
                         dataType: 'json',
-                        data: { "url": url2},
+                        data: { "url": url2 },
                         success: function(data) {
                             console.log(data);
                             var html = "";
-                            if(data=="El sitio es confiable"){
+                            if (data == "El sitio es confiable") {
                                 html = "<h2>Es sitio es confiable</h2>"
-                            } else if (data=="No es confiable el sitio"){
+                            } else if (data == "No es confiable el sitio") {
                                 html = "<h2>El sitio no es confiable</h2>"
-                            } else{
+                            } else {
                                 html = "<h2>No tenemos información suficiente</h2>"
                             }
 
