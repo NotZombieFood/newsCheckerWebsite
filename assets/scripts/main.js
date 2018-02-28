@@ -129,10 +129,10 @@
                     var categoria = $(this).attr('id');
                     var candidato = $('body').data('candidato');
                     var url = 'https://fakenews-mx.herokuapp.com/FEED';
-                    var devurl = 'https://fakenews-developer.herokuapp.com/FEED';
+                    //var devurl = 'https://fakenews-developer.herokuapp.com/FEED';
                     $.ajax({
                         type: "GET",
-                        url: devurl,
+                        url: url,
                         crossDomain: true,
                         dataType: 'json',
                         data: { "categoria": categoria, "candidato": candidato },
@@ -160,28 +160,32 @@
                 // JavaScript to be fired on the calculadora
                 $("#checkurl").submit(function() {
                     var url = 'https://fakenews-mx.herokuapp.com/ARTICLE';
-                    var devurl = 'https://fakenews-developer.herokuapp.com/ARTICLE';
+                    //var devurl = 'https://fakenews-developer.herokuapp.com/ARTICLE';
                     var url2 = $("#url").val();
+                    console.log(url2);
                     $.ajax({
                         type: "GET",
-                        url: devurl,
+                        url: url,
                         crossDomain: true,
-                        dataType: 'json',
                         data: { "url": url2 },
                         success: function(data) {
                             console.log(data);
                             var html = "";
                             if (data == "El sitio es confiable") {
-                                html = "<h2>Es sitio es confiable</h2>"
-                            } else if (data == "No es confiable el sitio") {
-                                html = "<h2>El sitio no es confiable</h2>"
-                            } else {
-                                html = "<h2>No tenemos información suficiente</h2>"
+                                html = "<img src='dist/images/cierto.png'> <h2>La noticia es confiable</h2>"
+                            } else if (data == "NoConfiable") {
+                                html = "<img src='dist/images/falso.png'> <h2>¡Ten cuidado!</h2><h4>Como dijeran nuestros abuelos, no creas todo lo que te dicen. Esta noticia no se ve tan cierta, así que ten cuidado.</h4>"
+                            } else if (data == "NoCat/NoPresidencial") {
+                                html = "<img src='dist/images/thinking.png'> <h2>¡La noticia no es de las elecciones!</h2><h4>Ahorita me estoy concentrando en aprender de este tema y de las categoria que creo que mi amo, pronto podrás hablar de más temas.</h4>"
+                            }  else {
+                                html = "<img src='dist/images/thinking.png'><h2>Nuestro sistema está confundido</h2><h4>Trabajamos arduamente para mejorar nuestro sistema, ¡para la siguiente ya no ocurrirá!</h4>"
                             }
 
                             $("#results").html(html);
                         },
                         failure: function(data) {
+                             var html = " <img src='dist/images/error.png'> <h2>Lo siento, ocurrió un error.</h2> <h4><a href='contacto.html'>Dinos que ocurrió para solucionarlo.</a></h4>"
+                            $("#results").html(html);
                             console.log(data);
                         }
                     });
